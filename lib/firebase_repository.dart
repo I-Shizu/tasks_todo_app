@@ -9,12 +9,13 @@ class TaskRepository {
   //Firestoreのコレクションの参照
   final CollectionReference<Map<String, dynamic>> _collection = FirebaseFirestore.instance.collection(collectionName);
 
-  //Firestoreからデータを取得するメソッド
-  Future<List<Task>> getTasks() async {
-    final snapshot = await _collection.get();
-    return snapshot.docs
-        .map((doc) => Task.fromFirestore(doc.data(), doc.id))
-        .toList();
+  //Firestoreからデータを取得するStream型のメソッド
+  Stream<List<Task>> getTasks() {
+    return _collection.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        return Task.fromDocument(doc);
+      }).toList();
+    });
   }
 
   //Firestoreにデータを追加するメソッド
@@ -24,7 +25,7 @@ class TaskRepository {
 
   //Firestoreのデータを更新するメソッド
   Future<void> updateTask(Task task) async {
-    await _collection.doc(task.id).update(task.toFirestore());
+    return await _collection.doc(task.id).update(task.toFirestore());
   }
 
   //Firestoreのデータを削除するメソッド
