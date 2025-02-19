@@ -1,10 +1,8 @@
-//firestoreのパッケージをインポート
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tasks_todo_app/todo_data.dart';
 
 //Taskクラスをを元にFiresroreのデータを取得、更新、削除するメソッドを持つクラス
 class TaskRepository {
-  //Firestoreのコレクション名
   static const String collectionName = 'tasks';
   //Firestoreのコレクションの参照
   final CollectionReference<Map<String, dynamic>> _collection = FirebaseFirestore.instance.collection(collectionName);

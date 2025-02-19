@@ -16,17 +16,6 @@ class Task {
   });
 
   // Firestore用の変換メソッド
-  factory Task.fromFirestore(Map<String, dynamic> data, String documentId) {
-    return Task(
-      id: documentId,
-      title: data['title'] ?? '',
-      deadline: DateTime.parse(data['deadline'] ?? DateTime.now().toIso8601String()),
-      priority: data['priority'] ?? 1,
-      completed: data['completed'] ?? false,
-    );
-  }
-
-  // Firestore用の変換メソッド
   factory Task.fromDocument(DocumentSnapshot doc) {
     return Task(
       id: doc.id,
@@ -40,7 +29,7 @@ class Task {
   Map<String, dynamic> toFirestore() {
     return {
       'title': title,
-      'deadline': deadline.toIso8601String(),
+      'deadline': Timestamp.fromDate(deadline),
       'priority': priority,
       'completed': completed,
     };
