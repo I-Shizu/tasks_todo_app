@@ -37,32 +37,47 @@ class TaskListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('TODOリスト')),
       body: StreamBuilder<List<Task>>(
-        stream: TaskRepository().getTasks(),
+        stream: taskRepository.getTasks(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+          // データ取得中
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          var tasks = snapshot.data!;
-          return ListView.builder(
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              var task = tasks[index];
-              return ListTile(
-                title: Text(task.title),
-                subtitle: Text(task.deadline.toString()),
-                leading: Checkbox(
-                  value: task.completed,
-                  onChanged: (value) {
-                    taskRepository.updateTask(task.copyWith(completed: value));
-                  },
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => taskRepository.deleteTask(task),
-                ),
-              );
-            },
-          );
+          // エラーが発生した場合
+          if (snapshot.hasError) {
+            return Center(child: Text('エラーが発生しました'));
+          }
+          // データが取得できた場合
+          if (snapshot.hasData) {
+            // データが空の場合の処理
+            if (snapshot.data!.isEmpty) {
+              return Center(child: Text('タスクがありません'));
+            }
+            // タスクがある場合の ListView
+            var tasks = snapshot.data!;
+            return ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                var task = tasks[index];
+                return ListTile(
+                  title: Text(task.title),
+                  subtitle: Text(task.deadline.toString()),
+                  leading: Checkbox(
+                    value: task.completed,
+                    onChanged: (value) {
+                      taskRepository.updateTask(task.copyWith(completed: value));
+                    },
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => taskRepository.deleteTask(task),
+                  ),
+                );
+              },
+            );
+          }
+          // それ以外のケース
+          return Center(child: Text('データがありません'));
         },
       ),
       floatingActionButton: FloatingActionButton(
