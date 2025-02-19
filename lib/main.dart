@@ -45,7 +45,7 @@ class TaskListScreen extends StatelessWidget {
           }
           // エラーが発生した場合
           if (snapshot.hasError) {
-            return Center(child: Text('エラーが発生しました'));
+            return Center(child: Text('エラーが発生しました: ${snapshot.error}'),);
           }
           // データが取得できた場合
           if (snapshot.hasData) {
