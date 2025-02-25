@@ -66,6 +66,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     title: titleController.text,
                     deadline: deadline ?? DateTime.now(),
                     priority: priority,
+                    estimatedTime: 0,
                   ),
                 );
                 Navigator.pop(context);

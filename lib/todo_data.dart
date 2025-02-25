@@ -5,6 +5,7 @@ class Task {
   String title;
   DateTime deadline;
   int priority;
+  int estimatedTime;
   bool completed;
 
   Task({
@@ -12,6 +13,7 @@ class Task {
     required this.title,
     required this.deadline,
     required this.priority,
+    required this.estimatedTime,
     this.completed = false,
   });
 
@@ -22,6 +24,7 @@ class Task {
       title: doc['title'],
       deadline: (doc['deadline'] as Timestamp).toDate(),
       priority: doc['priority'],
+      estimatedTime: doc['estimatedTime'],
       completed: doc['completed'],
     );
   }
@@ -47,6 +50,7 @@ class Task {
       title: title ?? this.title,
       deadline: deadline ?? this.deadline,
       priority: priority ?? this.priority,
+      estimatedTime: estimatedTime,
       completed: completed ?? this.completed,
     );
   }
