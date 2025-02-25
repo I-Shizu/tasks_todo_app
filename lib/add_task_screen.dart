@@ -15,6 +15,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController titleController = TextEditingController();
   DateTime? deadline;
   int priority = 1;
+  int estimatedTime = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               },
             ),
             SizedBox(height: 20),
+            //推定所用時間の入力欄を追加
+            TextField(
+              decoration: InputDecoration(labelText: '推定所用時間'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                //入力された値を整数に変換してestimatedTimeに代入
+                //変換できない場合は0を代入
+                setState(() {
+                  estimatedTime = int.tryParse(value) ?? 0;
+                });
+              },
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 taskRepository.addTask(
@@ -66,7 +80,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     title: titleController.text,
                     deadline: deadline ?? DateTime.now(),
                     priority: priority,
-                    estimatedTime: 0,
+                    estimatedTime: estimatedTime,
                   ),
                 );
                 Navigator.pop(context);

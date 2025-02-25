@@ -35,6 +35,7 @@ class Task {
       'deadline': Timestamp.fromDate(deadline),
       'priority': priority,
       'completed': completed,
+      'estimatedTime': estimatedTime,
     };
   }
 
@@ -43,6 +44,7 @@ class Task {
     String? title,
     DateTime? deadline,
     int? priority,
+    int? estimatedTime,
     bool? completed,
   }) {
     return Task(
@@ -50,7 +52,7 @@ class Task {
       title: title ?? this.title,
       deadline: deadline ?? this.deadline,
       priority: priority ?? this.priority,
-      estimatedTime: estimatedTime,
+      estimatedTime: this.estimatedTime,
       completed: completed ?? this.completed,
     );
   }
