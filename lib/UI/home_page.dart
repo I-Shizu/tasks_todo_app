@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     CalendarScreen(),
     TaskListScreen(),
     AddTaskScreen(),
-    SettingsScreen(),
+    SettingScreen(),
   ];
 
   void _onItemTapped(int index) {

@@ -17,6 +17,8 @@ dependencies:
   google_sign_in: ^6.2.2
   firebase_auth: ^5.5.0
   table_calendar:
+  flutter_riverpod: 
+  webview_flutter: 
 
 dev_dependencies:
   flutter_test:
