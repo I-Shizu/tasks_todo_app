@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_todo_app/UI/add_task_screen.dart';
-import 'package:tasks_todo_app/UI/calendar_screen.dart';
-import 'package:tasks_todo_app/UI/setting_screen.dart';
-import 'package:tasks_todo_app/UI/task_list_screen.dart';
+
+import '../UI/add_task_screen.dart';
+import '../UI/calendar_screen.dart';
+import '../UI/setting_screen.dart';
+import '../UI/task_list_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
