@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_todo_app/UI/add_task_screen.dart';
 
 import '../../firebase_repository.dart';
 import '../task_data.dart';
@@ -55,15 +54,6 @@ class TaskListScreen extends StatelessWidget {
           }
           // それ以外のケース
           return Center(child: Text('データがありません'));
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddTaskScreen()),
-          );
         },
       ),
     );
