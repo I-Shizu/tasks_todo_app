@@ -1,17 +1,9 @@
 import '../task_data.dart';
 
 class TaskScheduler {
-  // ユーザーの空き時間（ここでは仮のデータ）
-  List<DateTime> availableTimes = [
-    DateTime(2025, 2, 26, 9, 0),
-    DateTime(2025, 2, 26, 10, 0),
-    DateTime(2025, 2, 27, 9, 0),
-    DateTime(2025, 2, 27, 10, 0),
-  ];
-
   List<Task> tasks = [];
 
-  // タスクを優先度と締め切りでソート
+  // タスクを優先度と締め切りでソートする関数
   void sortTasks() {
     tasks.sort((a, b) {
       if (a.priority == b.priority) {

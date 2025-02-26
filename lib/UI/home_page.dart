@@ -16,10 +16,10 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const CalendarScreen(),
+    CalendarScreen(),
     TaskListScreen(),
-    const AddTaskScreen(),
-    const SettingsScreen(),
+    AddTaskScreen(),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
