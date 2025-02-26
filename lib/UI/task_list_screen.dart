@@ -11,7 +11,6 @@ class TaskListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('TODOリスト')),
       body: StreamBuilder<List<Task>>(
         stream: taskRepository.getTasks(),
         builder: (context, snapshot) {

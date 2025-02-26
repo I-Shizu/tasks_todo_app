@@ -20,7 +20,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('タスク追加')),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
