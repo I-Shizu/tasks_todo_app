@@ -6,6 +6,7 @@ class Task {
   DateTime deadline;
   int priority;
   int estimatedTime;
+  int mendokusasa = 0;
   bool completed;
 
   Task({
@@ -14,6 +15,7 @@ class Task {
     required this.deadline,
     required this.priority,
     required this.estimatedTime,
+    required this.mendokusasa,
     this.completed = false,
   });
 
@@ -25,6 +27,7 @@ class Task {
       deadline: (doc['deadline'] as Timestamp).toDate(),
       priority: doc['priority'],
       estimatedTime: doc['estimatedTime'],
+      mendokusasa: doc['mendokusasa'],
       completed: doc['completed'],
     );
   }
@@ -34,8 +37,9 @@ class Task {
       'title': title,
       'deadline': Timestamp.fromDate(deadline),
       'priority': priority,
-      'completed': completed,
       'estimatedTime': estimatedTime,
+      'mendokusasa': mendokusasa,
+      'completed': completed,
     };
   }
 
@@ -53,6 +57,7 @@ class Task {
       deadline: deadline ?? this.deadline,
       priority: priority ?? this.priority,
       estimatedTime: this.estimatedTime,
+      mendokusasa: this.mendokusasa,
       completed: completed ?? this.completed,
     );
   }

@@ -17,6 +17,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime? deadline;
   int priority = 1;
   int estimatedTime = 0;
+  int mendokusasa = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +82,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     deadline: deadline ?? DateTime.now(),
                     priority: priority,
                     estimatedTime: estimatedTime,
+                    mendokusasa: mendokusasa,
                   ),
                 );
                 Navigator.pushAndRemoveUntil(
