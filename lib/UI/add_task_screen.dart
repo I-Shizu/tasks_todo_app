@@ -73,6 +73,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               },
             ),
             SizedBox(height: 20),
+            //面倒さを選択するドロップダウンを追加
+            DropdownButton<int>(
+              value: mendokusasa,
+              items: [0, 1, 2, 3]
+                  .map((e) => DropdownMenuItem(value: e, child: Text('面倒さ $e')))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  mendokusasa = value!;
+                });
+              },
+            ),
             ElevatedButton(
               onPressed: () {
                 taskRepository.addTask(
