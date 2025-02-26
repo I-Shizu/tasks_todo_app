@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_todo_app/UI/home_page.dart';
 
 import '../../firebase_repository.dart';
 import '../task_data.dart';
@@ -82,7 +83,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     estimatedTime: estimatedTime,
                   ),
                 );
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                  context, 
+                  MaterialPageRoute(builder: (context) => HomePage()), 
+                  (route) => false
+                );
               },
               child: Text('保存'),
             ),
