@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_todo_app/add_task_screen.dart';
+import 'package:tasks_todo_app/UI/add_task_screen.dart';
 
-import '../firebase_repository.dart';
-import '../todo_data.dart';
+import '../../firebase_repository.dart';
+import '../task_data.dart';
 
 class TaskListScreen extends StatelessWidget {
   final TaskRepository taskRepository = TaskRepository();

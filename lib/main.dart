@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:tasks_todo_app/login_screen.dart';
-import 'package:tasks_todo_app/task_list_screen.dart';
+import 'package:tasks_todo_app/UI/home_page.dart';
+import 'package:tasks_todo_app/UI/login_screen.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -20,10 +20,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        primaryColor: Colors.deepPurple,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.deepPurple,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+        ),
         useMaterial3: true,
       ),
-      home: TaskListScreen(),//LoginScreen(),
+      home: HomePage(), //LoginScreen(),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tasks_todo_app/todo_data.dart';
+import 'package:tasks_todo_app/task_data.dart';
 
 //Taskクラスをを元にFiresroreのデータを取得、更新、削除するメソッドを持つクラス
 class TaskRepository {

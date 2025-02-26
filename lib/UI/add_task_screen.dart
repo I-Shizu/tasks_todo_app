@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../firebase_repository.dart';
-import '../todo_data.dart';
+import '../../firebase_repository.dart';
+import '../task_data.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -49,7 +49,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             SizedBox(height: 10),
             DropdownButton<int>(
               value: priority,
-              items: [1, 2, 3, 4, 5]
+              items: [1, 2, 3]
                   .map((e) => DropdownMenuItem(value: e, child: Text('重要度 $e')))
                   .toList(),
               onChanged: (value) {

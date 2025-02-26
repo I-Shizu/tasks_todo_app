@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tasks_todo_app/sign_in_screen.dart';
-import 'package:tasks_todo_app/task_list_screen.dart';
+import 'package:tasks_todo_app/UI/sign_in_screen.dart';
+import 'package:tasks_todo_app/UI/task_list_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
