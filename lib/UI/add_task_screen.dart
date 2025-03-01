@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_todo_app/UI/home_page.dart';
 
-import '../../firebase_repository.dart';
-import '../task_data.dart';
+import '../Data/task.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -12,8 +11,8 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  final TaskRepository taskRepository = TaskRepository();
   final TextEditingController titleController = TextEditingController();
+  final TaskRepository taskRepository = TaskRepository();
   DateTime? deadline;
   int priority = 1;
   int estimatedTime = 0;

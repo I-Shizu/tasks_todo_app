@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../firebase_repository.dart';
-import '../task_data.dart';
+import '../Data/task.dart';
 
 class TaskListScreen extends StatelessWidget {
-  final TaskRepository taskRepository = TaskRepository();
-
   TaskListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TaskRepository taskRepository = TaskRepository();
+
     return Scaffold(
       body: StreamBuilder<List<Task>>(
         stream: taskRepository.getTasks(),

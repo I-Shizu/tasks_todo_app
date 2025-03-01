@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
+import 'package:tasks_todo_app/schedule_entry.dart'; // schedule_entry.dart 内に scheduleProvider などが定義されている前提
+import '../Data/task.dart'; // Taskクラス
 
-import '../task_data.dart';
-import '../task_scheduler.dart';
-import '../firebase_repository.dart';
+class CalendarScreen extends ConsumerStatefulWidget {
+  const CalendarScreen({Key? key}) : super(key: key);
 
-class CalendarScreen extends StatefulWidget {
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
 }
 
-class _CalendarScreenState extends State<CalendarScreen> {
+class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   late DateTime _selectedDay;
   late DateTime _focusedDay;
-  final TaskRepository taskRepository = TaskRepository();
-  
-
 
   @override
   void initState() {
@@ -26,16 +25,40 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Firestoreからタスクを取得するtasksProviderProvider（生成済み）
+    final tasksAsync = ref.watch(tasksProviderProvider);
+    // タスクから計算したスケジュールのリスト
+    final scheduleList = ref.watch(scheduleProviderProvider);
+
+    // スケジュールエントリを日付ごとにグループ化（年月日単位で）
+    final Map<DateTime, List<ScheduleEntry>> scheduleByDate = {};
+    for (var entry in scheduleList) {
+      final dateKey = DateTime(
+        entry.scheduledDay.year,
+        entry.scheduledDay.month,
+        entry.scheduledDay.day,
+      );
+      if (!scheduleByDate.containsKey(dateKey)) {
+        scheduleByDate[dateKey] = [];
+      }
+      scheduleByDate[dateKey]!.add(entry);
+    }
+
+    // 表示用に日付順にソート
+    final sortedDates = scheduleByDate.keys.toList()..sort((a, b) => a.compareTo(b));
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("タスクカレンダー"),
+      ),
       body: Column(
         children: [
+          // カレンダー表示
           TableCalendar(
             firstDay: DateTime.utc(2020, 1, 1),
             lastDay: DateTime.utc(2030, 12, 31),
             focusedDay: _focusedDay,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
                 _selectedDay = selectedDay;
@@ -43,77 +66,50 @@ class _CalendarScreenState extends State<CalendarScreen> {
               });
             },
             eventLoader: (day) {
-              return <String>[];
+              final dateKey = DateTime(day.year, day.month, day.day);
+              // イベント（タスクタイトル）を表示用リストとして返す
+              final events = scheduleByDate[dateKey] ?? [];
+              return events.map((e) => e.taskTitle).toList();
             },
           ),
-          // Firebase のタスク取得後、TaskScheduler で日付ごとに振り分けたタスクを表示
+          const SizedBox(height: 8.0),
+          // スケジュールの一覧表示
           Expanded(
-            child: StreamBuilder<List<Task>>(
-              stream: taskRepository.getTasks(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return Center(child: Text('エラーが発生しました: ${snapshot.error}'));
-                }
-                if (snapshot.hasData) {
-                  var firebaseTasks = snapshot.data!;
-                  // タスクを日付ごとに振り分け
-                  var scheduledTasks = TaskScheduler().scheduleTasksAdvanced(firebaseTasks);
-                  // 今日以降の日付を抽出して昇順にソート
-                  var today = DateTime.now();
-                  List<DateTime> sortedDates = scheduledTasks.keys
-                      .where((date) => date.isAfter(today.subtract(Duration(days: 1))))
-                      .toList();
-                  sortedDates.sort((a, b) => a.compareTo(b));
-                  return ListView.builder(
-                    padding: EdgeInsets.all(8.0),
+            child: sortedDates.isEmpty
+                ? const Center(child: Text("スケジュールがありません"))
+                : ListView.builder(
+                    padding: const EdgeInsets.all(8.0),
                     itemCount: sortedDates.length,
                     itemBuilder: (context, index) {
-                      var date = sortedDates[index];
-                      var tasksForDate = scheduledTasks[date] ?? [];
+                      final date = sortedDates[index];
+                      final entries = scheduleByDate[date]!;
                       return Card(
-                        margin: EdgeInsets.symmetric(vertical: 4.0),
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Padding(
-                          padding: EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${date.year}-${date.month}-${date.day}",
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                DateFormat("yyyy-MM-dd").format(date),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
-                              Divider(),
-                              ...tasksForDate.map((task) => Row(
-                                    children: [
-                                      Checkbox(
-                                        value: task.completed,
-                                        onChanged: (bool? value) {
-                                          taskRepository.updateTask(task.copyWith(completed: value!));
-                                          setState(() {
-                                            task.completed = value;
-                                          });
-                                        },
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          task.title,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
+                              const Divider(),
+                              ...entries.map((entry) => ListTile(
+                                    title: Text(entry.taskTitle),
+                                    subtitle: Text(
+                                      "${entry.timeSlot} : ${entry.dailyAllocatedTime.toStringAsFixed(2)}分",
+                                    ),
                                   )),
                             ],
                           ),
                         ),
                       );
                     },
-                  );
-                }
-                return Center(child: Text('データがありません'));
-              },
-            ),
+                  ),
           ),
         ],
       ),
