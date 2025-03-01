@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'Data/task.dart';
+import 'task.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'schedule_entry.g.dart';

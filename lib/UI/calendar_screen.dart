@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:tasks_todo_app/schedule_entry.dart'; // schedule_entry.dart 内に scheduleProvider などが定義されている前提
+import 'package:tasks_todo_app/Data/schedule_entry.dart'; // schedule_entry.dart 内に scheduleProvider などが定義されている前提
 import '../Data/task.dart'; // Taskクラス
 
 class CalendarScreen extends ConsumerStatefulWidget {
-  const CalendarScreen({Key? key}) : super(key: key);
+  const CalendarScreen({super.key});
 
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
