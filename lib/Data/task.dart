@@ -60,7 +60,7 @@ class Task {
       deadline: deadline ?? this.deadline,
       priority: priority ?? this.priority,
       estimatedTime: this.estimatedTime,
-      mendokusasa: this.mendokusasa,
+      mendokusasa: mendokusasa,
       completed: completed ?? this.completed,
     );
   }

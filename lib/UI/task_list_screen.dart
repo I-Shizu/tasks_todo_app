@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Data/task.dart';
 
 class TaskListScreen extends StatelessWidget {
-  TaskListScreen({super.key});
+  const TaskListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

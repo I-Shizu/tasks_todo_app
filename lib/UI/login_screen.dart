@@ -4,6 +4,8 @@ import 'package:tasks_todo_app/UI/sign_in_screen.dart';
 import 'package:tasks_todo_app/UI/task_list_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
