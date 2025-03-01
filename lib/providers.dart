@@ -1,22 +1,19 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final themeProvider = StateNotifierProvider<ThemeNotifier, bool>((ref) {
-  return ThemeNotifier();
-});
-// テーマ状態を管理するStateNotifier
-class ThemeNotifier extends StateNotifier<bool> {
-  ThemeNotifier() : super(false); // 初期値はライトテーマ(false)
+part 'providers.g.dart';
+
+@riverpod
+class ThemeNotifier extends _$ThemeNotifier {
+  @override
+  bool build() => false; // 初期値はライトテーマ(false)
 
   void toggleTheme() => state = !state;
 }
 
-//通知プロバイダの定義
-final notificationProvider = StateNotifierProvider<NotificationNotifier, bool>((ref) {
-  return NotificationNotifier();
-});
-// 通知状態を管理するStateNotifier
-class NotificationNotifier extends StateNotifier<bool> {
-  NotificationNotifier() : super(true); // 初期値は通知オン(true)
+@riverpod
+class NotificationNotifier extends _$NotificationNotifier {
+  @override
+  bool build() => true; // 初期値は通知オン(true)
 
   void toggleNotification() => state = !state;
 }

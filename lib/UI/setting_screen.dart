@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks_todo_app/UI/web_view_screen.dart';
-import 'package:tasks_todo_app/providers.dart';
+import '../UI/web_view_screen.dart';
+import '../providers.dart';
 
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = ref.watch(themeProvider);
-    final isNotificationEnabled = ref.watch(notificationProvider);
+    final isDarkTheme = ref.watch(themeNotifierProvider);
+    final isNotificationEnabled = ref.watch(notificationNotifierProvider);
 
     return Scaffold(
       body: Padding(
@@ -109,7 +109,7 @@ class SettingScreen extends ConsumerWidget {
             Switch(
               value: isDarkTheme,
               onChanged: (value) {
-                ref.read(themeProvider.notifier).toggleTheme();
+                ref.read(themeNotifierProvider.notifier).toggleTheme();
               },
             ),
           ],
@@ -136,7 +136,7 @@ class SettingScreen extends ConsumerWidget {
             Switch(
               value: isNotificationEnabled,
               onChanged: (value) {
-                ref.read(notificationProvider.notifier).toggleNotification();
+                ref.read(notificationNotifierProvider.notifier).toggleNotification();
               },
             ),
           ],
