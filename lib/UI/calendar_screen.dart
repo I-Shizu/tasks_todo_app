@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:tasks_todo_app/Data/schedule_entry.dart'; // schedule_entry.dart 内に scheduleProvider などが定義されている前提
-import '../Data/task.dart'; // Taskクラス
+import 'package:tasks_todo_app/Data/schedule_entry.dart'; // schedule_entry.dart 内に scheduleProvider などが定義されている前提 Taskクラス
 
 class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
@@ -25,8 +24,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Firestoreからタスクを取得するtasksProviderProvider（生成済み）
-    final tasksAsync = ref.watch(tasksProviderProvider);
     // タスクから計算したスケジュールのリスト
     final scheduleList = ref.watch(scheduleProviderProvider);
 
