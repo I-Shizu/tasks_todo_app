@@ -30,7 +30,7 @@ class SettingScreen extends ConsumerWidget {
                   context,
                   icon: Icons.contact_mail,
                   title: 'お問い合わせ',
-                  url: 'https://docs.google.com/forms/d/e/1FAIpQLSfC07B7amecHg9ADznRxjbET2gAqhf49W_LebXUP-F_jYVOug/viewform',
+                  url: 'https://forms.gle/SkFukCMfnmZWD5p57',
                 ),
                 _urlCard(
                   context,
@@ -102,7 +102,7 @@ class SettingScreen extends ConsumerWidget {
             const Icon(Icons.brightness_6, size: 32),
             const SizedBox(width: 16),
             const Text(
-              'ライトテーマ',
+              'ライトテーマ/ダークテーマ',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const Spacer(),

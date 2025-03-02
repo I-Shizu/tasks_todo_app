@@ -16,7 +16,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime? deadline;
   int priority = 1;
   int estimatedTime = 0;
-  int mendokusasa = 0;
+  int mendokusasa = 1;
 
   @override
   Widget build(BuildContext context) {
