@@ -48,9 +48,6 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final sortedDates = scheduleByDate.keys.toList()..sort((a, b) => a.compareTo(b));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("タスクカレンダー"),
-      ),
       body: Column(
         children: [
           // カレンダー表示
