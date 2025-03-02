@@ -75,7 +75,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             //面倒さを選択するドロップダウンを追加
             DropdownButton<int>(
               value: mendokusasa,
-              items: [0, 1, 2, 3]
+              items: [1, 2, 3]
                   .map((e) => DropdownMenuItem(value: e, child: Text('面倒さ $e')))
                   .toList(),
               onChanged: (value) {
