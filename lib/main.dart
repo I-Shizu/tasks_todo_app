@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Data/firebase_options.dart';
 
-import '../UI/home_page.dart';
 import '../UI/login_screen.dart';
 import 'providers.dart';
 
@@ -44,7 +43,7 @@ class MyApp extends ConsumerWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      home: HomePage(), //LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }
