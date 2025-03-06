@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'task.g.dart';
 
 class Task {
+  String uid;
   String id;
   String title;
   DateTime deadline;
@@ -13,6 +14,7 @@ class Task {
   bool completed;
 
   Task({
+    required this.uid,
     required this.id,
     required this.title,
     required this.deadline,
@@ -25,6 +27,7 @@ class Task {
   // Firestore用の変換メソッド
   factory Task.fromDocument(DocumentSnapshot doc) {
     return Task(
+      uid: doc['uid'],
       id: doc.id,
       title: doc['title'],
       deadline: (doc['deadline'] as Timestamp).toDate(),
@@ -37,6 +40,8 @@ class Task {
 
   Map<String, dynamic> toFirestore() {
     return {
+      'uid': uid,
+      'id': id,
       'title': title,
       'deadline': Timestamp.fromDate(deadline),
       'priority': priority,
@@ -48,6 +53,8 @@ class Task {
 
   // タスクのコピーを作成するメソッド
   Task copyWith({
+    String? uid,
+    String? id,
     String? title,
     DateTime? deadline,
     int? priority,
@@ -55,7 +62,8 @@ class Task {
     bool? completed,
   }) {
     return Task(
-      id: id,
+      uid: uid ?? this.uid,
+      id: id ?? this.id,
       title: title ?? this.title,
       deadline: deadline ?? this.deadline,
       priority: priority ?? this.priority,
@@ -68,8 +76,8 @@ class Task {
 
 class TaskRepository {
   static const String collectionName = 'tasks';
-  //Firestoreのコレクションの参照
-  final CollectionReference<Map<String, dynamic>> _collection = FirebaseFirestore.instance.collection(collectionName);
+  final CollectionReference<Map<String, dynamic>> _collection 
+    = FirebaseFirestore.instance.collection(collectionName);
 
   //Firestoreからデータを取得するStream型のメソッド
   Stream<List<Task>> getTasks() {
@@ -104,4 +112,10 @@ class TasksProvider extends _$TasksProvider {
       yield tasks;
     }
   }
+}
+
+@riverpod
+class TaskRepositoryProvider extends _$TaskRepositoryProvider {
+  @override
+  TaskRepository build() => TaskRepository(); 
 }

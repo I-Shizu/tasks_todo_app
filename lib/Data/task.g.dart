@@ -22,5 +22,22 @@ final tasksProviderProvider =
 );
 
 typedef _$TasksProvider = AutoDisposeStreamNotifier<List<Task>>;
+String _$taskRepositoryProviderHash() =>
+    r'aa12489bcb691a6e349ce5eccde000aea03dff6a';
+
+/// See also [TaskRepositoryProvider].
+@ProviderFor(TaskRepositoryProvider)
+final taskRepositoryProviderProvider = AutoDisposeNotifierProvider<
+    TaskRepositoryProvider, TaskRepository>.internal(
+  TaskRepositoryProvider.new,
+  name: r'taskRepositoryProviderProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$taskRepositoryProviderHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TaskRepositoryProvider = AutoDisposeNotifier<TaskRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
