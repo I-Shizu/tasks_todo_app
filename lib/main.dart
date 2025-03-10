@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasks_todo_app/UI/sign_in_screen.dart';
 import 'Data/firebase_options.dart';
 
-import '../UI/login_screen.dart';
+
 import 'UI/home_page.dart';
 import 'providers.dart';
 
@@ -58,7 +59,7 @@ class MyApp extends ConsumerWidget {
             return HomePage();
           }
           // User が null である、つまり未サインインのサインイン画面へ
-          return LoginScreen();
+          return SignInScreen();
         },
       ),
     );
