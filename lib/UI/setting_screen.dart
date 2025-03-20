@@ -19,7 +19,10 @@ class SettingScreen extends ConsumerWidget {
           children: [
             const Text(
               'アプリについて',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24, 
+                fontWeight: FontWeight.bold
+              ),
             ),
             const SizedBox(height: 16),
             ListView(
@@ -43,7 +46,10 @@ class SettingScreen extends ConsumerWidget {
             const SizedBox(height: 24), // 間隔を調整
             const Text(
               '基本設定',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24, 
+                fontWeight: FontWeight.bold
+              ),
             ),
             const SizedBox(height: 16),
             ListView(
@@ -102,7 +108,7 @@ class SettingScreen extends ConsumerWidget {
             const Icon(Icons.brightness_6, size: 32),
             const SizedBox(width: 16),
             const Text(
-              'ライトテーマ/ダークテーマ',
+              'ライト/ダークテーマ',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const Spacer(),
