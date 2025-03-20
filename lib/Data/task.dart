@@ -1,7 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'task.g.dart';
 
 class Task {
   String uid;
@@ -72,50 +69,4 @@ class Task {
       completed: completed ?? this.completed,
     );
   }
-}
-
-class TaskRepository {
-  static const String collectionName = 'tasks';
-  final CollectionReference<Map<String, dynamic>> _collection 
-    = FirebaseFirestore.instance.collection(collectionName);
-
-  //Firestoreからデータを取得するStream型のメソッド
-  Stream<List<Task>> getTasks() {
-    return _collection.snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return Task.fromDocument(doc);
-      }).toList();
-    });
-  }
-
-  //Firestoreにデータを追加するメソッド
-  Future<void> addTask(Task task) async {
-    await _collection.add(task.toFirestore());
-  }
-
-  //Firestoreのデータを更新するメソッド
-  Future<void> updateTask(Task task) async {
-    return await _collection.doc(task.id).update(task.toFirestore());
-  }
-
-  //Firestoreのデータを削除するメソッド
-  Future<void> deleteTask(Task task) async {
-    await _collection.doc(task.id).delete();
-  }
-}
-
-@riverpod
-class TasksProvider extends _$TasksProvider {
-  @override
-  Stream<List<Task>> build() async* {
-    await for (final tasks in TaskRepository().getTasks()) {
-      yield tasks;
-    }
-  }
-}
-
-@riverpod
-class TaskRepositoryProvider extends _$TaskRepositoryProvider {
-  @override
-  TaskRepository build() => TaskRepository(); 
 }
