@@ -75,7 +75,7 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
               },
             ),
             SizedBox(height: 20),
-            Text('推定所要時間: ${estimatedTime}分'),
+            Text('推定所要時間: $estimatedTime分'),
             Slider(
               value: estimatedTime.toDouble(),
               min: 0,
