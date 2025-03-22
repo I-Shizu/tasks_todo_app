@@ -5,6 +5,7 @@ class Task {
   String id;
   String title;
   DateTime deadline;
+  String createdAt;
   int priority;
   int estimatedTime;
   int mendokusasa = 0;
@@ -15,6 +16,7 @@ class Task {
     required this.id,
     required this.title,
     required this.deadline,
+    required this.createdAt,
     required this.priority,
     required this.estimatedTime,
     required this.mendokusasa,
@@ -28,6 +30,7 @@ class Task {
       id: doc.id,
       title: doc['title'],
       deadline: (doc['deadline'] as Timestamp).toDate(),
+      createdAt: doc['createdAt'],
       priority: doc['priority'],
       estimatedTime: doc['estimatedTime'],
       mendokusasa: doc['mendokusasa'],
@@ -41,6 +44,7 @@ class Task {
       'id': id,
       'title': title,
       'deadline': Timestamp.fromDate(deadline),
+      'createdAt': createdAt,
       'priority': priority,
       'estimatedTime': estimatedTime,
       'mendokusasa': mendokusasa,
@@ -54,6 +58,7 @@ class Task {
     String? id,
     String? title,
     DateTime? deadline,
+    String? createdAt,
     int? priority,
     int? estimatedTime,
     bool? completed,
@@ -63,6 +68,7 @@ class Task {
       id: id ?? this.id,
       title: title ?? this.title,
       deadline: deadline ?? this.deadline,
+      createdAt: createdAt ?? this.createdAt,
       priority: priority ?? this.priority,
       estimatedTime: this.estimatedTime,
       mendokusasa: mendokusasa,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_todo_app/UI/home_page.dart';
 import '../Data/task.dart';
 import '../auth_state_notifier.dart';
+import '../firebase_repository.dart';
 
 class AddTaskScreen extends ConsumerStatefulWidget {
   const AddTaskScreen({super.key});
@@ -13,7 +14,7 @@ class AddTaskScreen extends ConsumerStatefulWidget {
 
 class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
   final TextEditingController titleController = TextEditingController();
-  final TaskRepository taskRepository = TaskRepository();
+  final FirebaseRepository taskRepository = FirebaseRepository();
   DateTime? deadline;
   int priority = 1;
   int estimatedTime = 0;
@@ -119,16 +120,19 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 return Center(
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      taskRepository.addTask(
+                      taskRepository.createTask(
+                        user.uid,
                         Task(
                           uid: user.uid,
                           id: '',
                           title: titleController.text,
                           deadline: deadline ?? DateTime.now(),
+                          createdAt: DateTime.now().toIso8601String(),
                           priority: priority,
                           estimatedTime: estimatedTime,
                           mendokusasa: mendokusasa,
-                        ),
+                          completed: false,
+                        ).toFirestore(),
                       );
                       Navigator.pushAndRemoveUntil(
                         context,

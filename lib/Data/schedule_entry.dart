@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../firebase_repository.dart';
 import 'task.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -74,7 +76,9 @@ List<ScheduleEntry> scheduleTasks(List<Task> tasks) {
 // Riverpodプロバイダー：スケジュール計算を実行するプロバイダー
 @riverpod
 List<ScheduleEntry> scheduleProvider(Ref ref) {
-  final tasks = ref.watch(tasksProviderProvider);
+  final user = FirebaseAuth.instance.currentUser;
+  final tasks = ref.watch(userTasksProvider(user!.uid));
+
   return tasks.when(
     data: (tasks) => scheduleTasks(tasks),
     loading: () => [],

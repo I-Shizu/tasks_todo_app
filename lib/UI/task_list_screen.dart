@@ -3,20 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_todo_app/auth_state_notifier.dart';
 import 'package:tasks_todo_app/firebase_repository.dart';
 
-import '../Data/task.dart';
-
 class TaskListScreen extends ConsumerWidget {
   const TaskListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tasksAsync = ref.watch(tasksProviderProvider);
     final authAsync = ref.watch(authStateNotifierProvider);
-    final firebaseRepository = ref.read(FirebaseRepositoryProvider);
-
+    
     //ユーザーがサインインしている場合はタスクリストを表示
     return authAsync.when(
       data: (user) {
+        //userの取得が完了してからuserのタスクリストを取得
+        final tasksAsync = ref.watch(userTasksProvider(user!.uid));
+        final firebaseRepository = ref.read(firebaseRepositoryProvider);
+
         return Scaffold(
           body: tasksAsync.when(
             data: (tasks) {
@@ -31,7 +31,7 @@ class TaskListScreen extends ConsumerWidget {
                       value: task.completed,
                       onChanged: (value) {
                         firebaseRepository.updateTask(
-                          user!.uid,
+                          user.uid,
                           task.id,
                           task.copyWith(completed: value) as Map<String, dynamic>,
                         );
