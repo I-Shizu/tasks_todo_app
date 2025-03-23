@@ -14,16 +14,37 @@ class SignInScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('新規登録')),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            final User? user = await AuthService().signInWithGoogle();
-            if (user != null) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            }
-          },
-          child: const Text('Googleでサインイン'),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                
+              },
+              child: const Text('メール/パスワードでサインイン'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final User? user = await AuthService().signInWithGoogle();
+                if (user != null) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                }
+              },
+              child: const Text('Googleアカウントでサインイン'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final User? user = await AuthService().signInWithApple();
+                if (user != null) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                }
+              },
+              child: const Text('Appleアカウントでサインイン'),
+            ),
+          ],
         ),
       ),
     );

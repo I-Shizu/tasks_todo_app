@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -29,5 +30,24 @@ class AuthService {
   // 現在のユーザー取得
   User? getCurrentUser() {
     return _auth.currentUser;
+  }
+
+  //appleログイン
+  Future<User?> signInWithApple() async {
+    final result = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    final OAuthProvider oAuthProvider = OAuthProvider('apple.com');
+    final AuthCredential credential = oAuthProvider.credential(
+      idToken: result.identityToken,
+      accessToken: result.authorizationCode,
+    );
+
+    final UserCredential userCredential = await _auth.signInWithCredential(credential);
+    return userCredential.user; 
   }
 }
