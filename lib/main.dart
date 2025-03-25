@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:tasks_todo_app/UI/sign_in_screen.dart';
 import 'Data/firebase_options.dart';
-
-
 import 'UI/home_page.dart';
 import 'providers.dart';
 
@@ -44,6 +44,7 @@ class MyApp extends ConsumerWidget {
           unselectedItemColor: Colors.white70,
         ),
         useMaterial3: true,
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       darkTheme: ThemeData.dark(),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
