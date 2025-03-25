@@ -24,7 +24,6 @@ class AuthService {
   // ログアウト
   Future<void> signOut() async {
     await _auth.signOut();
-    await _googleSignIn.signOut();
   }
 
   // 現在のユーザー取得
@@ -49,5 +48,14 @@ class AuthService {
 
     final UserCredential userCredential = await _auth.signInWithCredential(credential);
     return userCredential.user; 
+  }
+
+  //メールアドレスとパスワードでログイン
+  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+    final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return userCredential.user;
   }
 }
