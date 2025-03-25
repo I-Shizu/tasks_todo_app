@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasks_todo_app/auth_sign_in.dart';
 import '../UI/web_view_screen.dart';
 import '../providers.dart';
+import 'sign_in_screen.dart';
 
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
@@ -58,6 +60,8 @@ class SettingScreen extends ConsumerWidget {
               children: [
                 _toggleThemeCard(ref, isDarkTheme),
                 _notificationSettingCard(ref, isNotificationEnabled),
+                _logoutCard(context),
+                _deleteAccountCard(context),
               ],
             ),
           ],
@@ -148,6 +152,91 @@ class SettingScreen extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  //ログアウトのCardを作成
+  Widget _logoutCard(BuildContext context) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          AuthService().signOut();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => SignInScreen()),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Icon(Icons.logout, size: 32),
+              const SizedBox(width: 16),
+              const Text(
+                'ログアウト',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  //アカウント削除(退会)のCardを作成
+  Widget _deleteAccountCard(BuildContext context) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          _showDeleteConfirmDialog(context);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Icon(Icons.delete, size: 32),
+              const SizedBox(width: 16),
+              const Text(
+                'アカウント削除',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteConfirmDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("確認"),
+          content: Text("本当にアカウントを削除してもよろしいですか？"),
+          actions: [
+            TextButton(
+              child: Text("キャンセル"),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text("削除する"),
+              onPressed: () {
+                AuthService().deleteAccount();
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

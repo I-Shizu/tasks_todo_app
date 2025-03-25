@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -21,6 +23,38 @@ class AuthService {
     return userCredential.user;
   }
 
+  //appleログイン
+  Future<UserCredential> signInWithApple() async {
+    if (Platform.isIOS) {
+      // Appleのクレデンシャル取得
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      // OAuthクレデンシャル作成
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      // Firebaseでサインイン
+      return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    } else {
+      throw UnsupportedError("Apple Sign-In is only supported on iOS");
+    }
+  }
+
+  //メールアドレスとパスワードでログイン
+  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+    final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return userCredential.user;
+  }
+
   // ログアウト
   Future<void> signOut() async {
     await _auth.signOut();
@@ -31,31 +65,9 @@ class AuthService {
     return _auth.currentUser;
   }
 
-  //appleログイン
-  Future<User?> signInWithApple() async {
-    final result = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-    );
-
-    final OAuthProvider oAuthProvider = OAuthProvider('apple.com');
-    final AuthCredential credential = oAuthProvider.credential(
-      idToken: result.identityToken,
-      accessToken: result.authorizationCode,
-    );
-
-    final UserCredential userCredential = await _auth.signInWithCredential(credential);
-    return userCredential.user; 
-  }
-
-  //メールアドレスとパスワードでログイン
-  Future<User?> signInWithEmailAndPassword(String email, String password) async {
-    final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    return userCredential.user;
+  //アカウント削除機能
+  Future<void> deleteAccount() async {
+    final User? user = _auth.currentUser;
+    await user?.delete();
   }
 }

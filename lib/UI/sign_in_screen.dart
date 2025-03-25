@@ -17,11 +17,12 @@ class SignInScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('新規登録')),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 16,
           children: [
             ElevatedButton(
               onPressed: () async {
-                // メールアドレスとパスワードでサインインする画面に遷移
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => MailLoginScreen()),
                 );
               },
@@ -40,8 +41,8 @@ class SignInScreen extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                final User? user = await AuthService().signInWithApple();
-                if (user != null) {
+                final UserCredential userCredential = await AuthService().signInWithApple();
+                if (userCredential.user != null) {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => HomePage()),
                   );

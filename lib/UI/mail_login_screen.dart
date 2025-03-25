@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks_todo_app/UI/sign_in_screen.dart';
 import 'package:tasks_todo_app/auth_sign_in.dart';
 
 import 'home_page.dart';
@@ -12,10 +14,12 @@ class MailLoginScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('メールアドレスとパスワードでログイン'),
+        title: Text('ログイン'),
       ),
       body: Center(
         child: Column(
+          spacing: 16,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
               controller: emailController,
@@ -42,6 +46,20 @@ class MailLoginScreen extends StatelessWidget {
                 );
               },
               child: Text('ログイン'),
+            ),
+            RichText(
+              text: TextSpan(
+                text: "他のログイン方法はこちら",
+                style: TextStyle(color: Colors.blue),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      (_) => false,
+                    );
+                  },
+              ),
             ),
           ],
         ),
