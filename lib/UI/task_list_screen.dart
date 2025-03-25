@@ -28,12 +28,13 @@ class TaskListScreen extends ConsumerWidget {
                     title: Text(task.title),
                     subtitle: Text(task.deadline.toIso8601String()),
                     trailing: Checkbox(
+                      //チェックをつける
                       value: task.completed,
                       onChanged: (value) {
                         firebaseRepository.updateTask(
                           user.uid,
                           task.id,
-                          task.copyWith(completed: value) as Map<String, dynamic>,
+                          {'completed': value},
                         );
                       },
                     ),
