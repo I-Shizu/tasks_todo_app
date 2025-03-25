@@ -176,7 +176,7 @@ class SettingScreen extends ConsumerWidget {
               const SizedBox(width: 16),
               const Text(
                 'ログアウト',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -203,7 +203,7 @@ class SettingScreen extends ConsumerWidget {
               const SizedBox(width: 16),
               const Text(
                 'アカウント削除',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ],
           ),

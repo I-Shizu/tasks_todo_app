@@ -7,6 +7,8 @@ import 'home_page.dart';
 
 //メールとパスワードでログインする画面
 class MailLoginScreen extends StatelessWidget {
+  const MailLoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
