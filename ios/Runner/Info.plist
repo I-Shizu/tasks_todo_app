@@ -48,21 +48,12 @@
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
-				<key>CFBundleURLSchemes</key>
-				<array>
-				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-				</array>
-			</dict>
-		</array>
-		<key>FirebaseAppDelegateProxyEnabled</key>
-		<false/>
-		<array>
-			<dict>
 				<key>CFBundleTypeRole</key>
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.googleusercontent.apps.1091850231095-q3pbs7j79gkt2khee357lcrt1bkh4uh6</string>
+				<string>com.googleusercontent.apps.1091850231095-q3pbs7j79gkt2khee357lcrt1bkh4uh6</string>
+				<string>com.apple.authenticate</string> <!-- 追加 -->
 				</array>
 			</dict>
 		</array>
@@ -71,7 +62,10 @@
 			<string>google</string>
 			<string>googlechrome</string>
 			<string>com.googleusercontent.apps.1091850231095-q3pbs7j79gkt2khee357lcrt1bkh4uh6</string>
+			<string>appleauth</string> <!-- 追加 -->
 		</array>
+		<key>FirebaseAppDelegateProxyEnabled</key>
+		<false/>
 		<key>UIStatusBarHidden</key>
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
