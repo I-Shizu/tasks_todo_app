@@ -38,7 +38,6 @@ class AuthService {
         idToken: appleCredential.identityToken,
         accessToken: appleCredential.authorizationCode,
       );
-
       // Firebaseでサインイン
       return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } else {

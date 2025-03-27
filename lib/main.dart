@@ -48,6 +48,7 @@ class MyApp extends ConsumerWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      debugShowCheckedModeBanner: false,
       home: StreamBuilder<User?>(
         stream: authCheck,
         builder: (context, snapshot) {
