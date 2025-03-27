@@ -26,19 +26,19 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
           children: [
             TextField(
               controller: titleController,
               decoration: InputDecoration(
                 labelText: 'タイトル',
-                border: OutlineInputBorder(),
+                //border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.edit),
               ),
             ),
-            SizedBox(height: 10),
             Card(
               elevation: 3,
               child: ListTile(
@@ -59,7 +59,21 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 },
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
+            Text('推定所要時間: $estimatedTime分'),
+            Slider(
+              value: estimatedTime.toDouble(),
+              min: 0,
+              max: 240,
+              divisions: 24,
+              label: estimatedTime.toString(),
+              onChanged: (value) {
+                setState(() {
+                  estimatedTime = value.toInt();
+                });
+              },
+            ),
+            SizedBox(height: 5),
             Text('重要度'),
             SegmentedButton<int>(
               segments: [
@@ -74,21 +88,7 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
-            Text('推定所要時間: $estimatedTime分'),
-            Slider(
-              value: estimatedTime.toDouble(),
-              min: 0,
-              max: 240,
-              divisions: 24,
-              label: estimatedTime.toString(),
-              onChanged: (value) {
-                setState(() {
-                  estimatedTime = value.toInt();
-                });
-              },
-            ),
-            SizedBox(height: 20),
+            SizedBox(height: 5),
             Text('面倒さ'),
             SegmentedButton<int>(
               segments: [
@@ -103,7 +103,7 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 5),
             authAsync.when(
               data: (user) {
                 if (user == null) {
