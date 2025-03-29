@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,30 +30,6 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    _initializeFCM();
-  }
-
-  Future<void> _initializeFCM() async {
-    final messaging = FirebaseMessaging.instance;
-    
-    // 通知の許可をリクエスト
-    await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    
-    // APNSトークンを取得
-    final token = await messaging.getToken();
-    print('🐯 FCM TOKEN: $token');
-  }
 
   @override
   Widget build(BuildContext context) {

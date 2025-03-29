@@ -13,7 +13,7 @@ class ThemeNotifier extends _$ThemeNotifier {
 @riverpod
 class NotificationNotifier extends _$NotificationNotifier {
   @override
-  bool build() => true; // 初期値は通知オン(true)
+  bool build() => true; 
 
   void toggleNotification() => state = !state;
 }
