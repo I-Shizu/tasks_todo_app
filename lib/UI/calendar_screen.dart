@@ -41,10 +41,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       scheduleByDate[dateKey]!.add(entry);
     }
 
-    // 表示用に日付順にソート
     final sortedDates = scheduleByDate.keys.toList()..sort((a, b) => a.compareTo(b));
 
     return Scaffold(
+
       appBar: AppBar(
         title: const Text("カレンダー"),
       ),
@@ -68,15 +68,17 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               final events = scheduleByDate[dateKey] ?? [];
               return events.map((e) => e.taskTitle).toList();
             },
+            headerStyle: HeaderStyle(
+              formatButtonVisible: false, // フォーマット変更ボタンを表示
+            ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 48.0),
           // スケジュールの一覧表示
           Expanded(
             child: sortedDates.isEmpty
                 ? Center(
                   child: Column(
                     children: [
-                      const SizedBox(height: 40),
                       AnimatedOpacity(
                         opacity: 0.5,
                         duration: const Duration(milliseconds: 300),
