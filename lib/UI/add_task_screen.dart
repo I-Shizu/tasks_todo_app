@@ -25,6 +25,9 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
     final authAsync = ref.watch(authStateNotifierProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("タスク追加"),
+      ),
       body: Padding(
         padding: EdgeInsets.all(24.0),
         child: Column(

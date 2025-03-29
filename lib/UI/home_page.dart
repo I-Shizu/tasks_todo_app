@@ -28,27 +28,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  String _getTitle(int index) {
-    switch (index) {
-      case 0:
-        return "今日のスケジュール";
-      case 1:
-        return "タスク一覧";
-      case 2:
-        return "タスク追加";
-      case 3:
-        return "設定";
-      default:
-        return "";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_getTitle(_selectedIndex)),
-      ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
