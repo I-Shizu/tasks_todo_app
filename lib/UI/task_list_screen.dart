@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_todo_app/auth_state_notifier.dart';
 import 'package:tasks_todo_app/firebase_repository.dart';
 
+import 'add_task_screen.dart';
 import 'task_detail_screen.dart';
 
 class TaskListScreen extends ConsumerWidget {
@@ -20,8 +22,48 @@ class TaskListScreen extends ConsumerWidget {
         final firebaseRepository = ref.read(firebaseRepositoryProvider);
 
         return Scaffold(
+          appBar: AppBar(
+            title: const Text('タスクリスト'),
+          ),
           body: tasksAsync.when(
             data: (tasks) {
+              if (tasks.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AnimatedOpacity(
+                        opacity: 0.5,
+                        duration: const Duration(milliseconds: 300),
+                        child: Image.asset(
+                          'assets/images/add_task_image.png',
+                          width: 200,
+                          height: 200,
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: '新しいタスクを追加しよう',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddTaskScreen(),
+                                ),
+                              );
+                            },
+                          )
+                        ),
+                    ],
+                  ),
+                );
+              }
+
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
@@ -36,7 +78,6 @@ class TaskListScreen extends ConsumerWidget {
                     ),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
-                      //タスクを削除
                       firebaseRepository.deleteTask(user.uid, task.id);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('${task.title}を削除しました')),
