@@ -73,7 +73,23 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           // スケジュールの一覧表示
           Expanded(
             child: sortedDates.isEmpty
-                ? const Center(child: Text("スケジュールがありません"))
+                ? Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 40),
+                      AnimatedOpacity(
+                        opacity: 0.5,
+                        duration: const Duration(milliseconds: 300),
+                        child: Image.asset(
+                          "assets/images/calendar_image.png",
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
+                      Text("スケジュールがありません"),
+                    ],
+                  ),
+                )
                 : ListView.builder(
                     padding: const EdgeInsets.all(8.0),
                     itemCount: sortedDates.length,
