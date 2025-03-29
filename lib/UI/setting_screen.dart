@@ -14,6 +14,10 @@ class SettingScreen extends ConsumerWidget {
     final isNotificationEnabled = ref.watch(notificationNotifierProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('設定'),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
