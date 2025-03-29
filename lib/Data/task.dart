@@ -61,7 +61,8 @@ class Task {
     String? createdAt,
     int? priority,
     int? estimatedTime,
-    bool? completed,
+    bool? completed, 
+    required int mendokusasa,
   }) {
     return Task(
       uid: uid ?? this.uid,
