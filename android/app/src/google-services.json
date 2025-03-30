@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1091850231095",
+    "project_id": "tasks-todo-project",
+    "storage_bucket": "tasks-todo-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091850231095:android:29bae8cffea58dcd880eb2",
+        "android_client_info": {
+          "package_name": "com.example.tasks_todo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091850231095-77ph04j3vve0jbg0jdfh36vn8abun7o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDODbwR5NPYOROlaFXfMGI76va7osKCrPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091850231095-77ph04j3vve0jbg0jdfh36vn8abun7o7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1091850231095-q3pbs7j79gkt2khee357lcrt1bkh4uh6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tasksTodoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
