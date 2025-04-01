@@ -39,7 +39,7 @@ class SettingScreen extends ConsumerWidget {
                   context,
                   icon: Icons.contact_mail,
                   title: 'お問い合わせ',
-                  url: 'https://forms.gle/SkFukCMfnmZWD5p57',
+                  url: 'https://forms.gle/8CCV97o8SRmjxk2t6',
                 ),
                 _urlCard(
                   context,
