@@ -23,6 +23,12 @@ class AuthService {
     return userCredential.user;
   }
 
+  // 匿名ログイン
+  Future<UserCredential> signInAnonymously() async {
+    final UserCredential userCredential = await _auth.signInAnonymously();
+    return userCredential;
+  }
+
   //appleログイン
   Future<UserCredential> signInWithApple() async {
     if (Platform.isIOS) {

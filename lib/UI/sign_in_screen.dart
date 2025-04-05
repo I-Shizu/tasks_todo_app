@@ -50,6 +50,18 @@ class SignInScreen extends ConsumerWidget {
               },
               child: const Text('Appleアカウントでサインイン'),
             ),
+            //ログインせずにサインイン（匿名認証）
+            ElevatedButton(
+              onPressed: () async {
+                final UserCredential userCredential = await AuthService().signInAnonymously();
+                if (userCredential.user != null) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                }
+              },
+              child: const Text('ログインせずに始める'),
+            ),
           ],
         ),
       ),
