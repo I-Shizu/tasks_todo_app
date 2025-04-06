@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 import 'package:tasks_todo_app/UI/home_page.dart';
 import 'package:tasks_todo_app/auth_sign_in.dart';
 
@@ -20,15 +21,20 @@ class SignInScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 16,
           children: [
-            ElevatedButton(
-              onPressed: () async {
+            SignInButton(
+              Buttons.email,
+              text: 'メールアドレスでログイン',
+              onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MailLoginScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => const MailLoginScreen(),
+                  ),
                 );
               },
-              child: const Text('メール/パスワードでサインイン'),
             ),
-            ElevatedButton(
+            SignInButton(
+              Buttons.google,
+              text: 'Googleでログイン',
               onPressed: () async {
                 final User? user = await AuthService().signInWithGoogle();
                 if (user != null) {
@@ -37,20 +43,27 @@ class SignInScreen extends ConsumerWidget {
                   );
                 }
               },
-              child: const Text('Googleアカウントでサインイン'),
             ),
-            ElevatedButton(
+            SignInButton(
+              Buttons.apple,
+              text: 'Appleでログイン',
               onPressed: () async {
-                final UserCredential userCredential = await AuthService().signInWithApple();
-                if (userCredential.user != null) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+                try {
+                  final UserCredential userCredential = await AuthService().signInWithApple();
+                  if (userCredential.user != null) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  }
+                } catch (e) {
+                  print("Error during Apple Sign-In: $e");
                 }
               },
-              child: const Text('Appleアカウントでサインイン'),
             ),
             //ログインせずにサインイン（匿名認証）
+            SizedBox(
+              height: 16,
+            ),
             ElevatedButton(
               onPressed: () async {
                 final UserCredential userCredential = await AuthService().signInAnonymously();
