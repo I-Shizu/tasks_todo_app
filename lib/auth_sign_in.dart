@@ -39,15 +39,18 @@ class AuthService {
             AppleIDAuthorizationScopes.fullName,
           ],
         );
-
         if (appleCredential.identityToken == null) {
-          throw Exception('Apple Sign-In failed: Missing credentials');
+          print('Apple Sign-In failed: Missing credentials');
         }
 
         final oauthCredential = OAuthProvider("apple.com").credential(
           idToken: appleCredential.identityToken,
           accessToken: appleCredential.authorizationCode,
         );
+        if (oauthCredential.accessToken == null) {
+          print('Apple Sign-In failed: Missing access token');
+          
+        }
 
         return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       } catch (e) {
