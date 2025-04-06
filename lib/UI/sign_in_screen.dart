@@ -48,15 +48,11 @@ class SignInScreen extends ConsumerWidget {
               Buttons.apple,
               text: 'Appleでログイン',
               onPressed: () async {
-                try {
-                  final UserCredential userCredential = await AuthService().signInWithApple();
-                  if (userCredential.user != null) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  }
-                } catch (e) {
-                  print("Error during Apple Sign-In: $e");
+                final UserCredential userCredential = await AuthService().signInWithApple();
+                if (userCredential.user != null) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
                 }
               },
             ),
