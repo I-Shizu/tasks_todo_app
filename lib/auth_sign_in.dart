@@ -32,23 +32,30 @@ class AuthService {
   //appleログイン
   Future<UserCredential> signInWithApple() async {
     if (Platform.isIOS) {
-      // Appleのクレデンシャル取得
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-      );
-      // OAuthクレデンシャル作成
-      final oauthCredential = OAuthProvider("apple.com").credential(
-        idToken: appleCredential.identityToken,
-        accessToken: appleCredential.authorizationCode,
-      );
-      // Firebaseでサインイン
-      return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-    } else {
-      throw UnsupportedError("Apple Sign-In is only supported on iOS");
+      try {
+        final appleCredential = await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        );
+
+        if (appleCredential.identityToken == null) {
+          throw Exception('Apple Sign-In failed: Missing credentials');
+        }
+
+        final oauthCredential = OAuthProvider("apple.com").credential(
+          idToken: appleCredential.identityToken,
+          accessToken: appleCredential.authorizationCode,
+        );
+
+        return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      } catch (e) {
+        print("Error during Apple Sign-In: $e");
+        rethrow;  // エラーを再スローして上位でキャッチできるようにする
+      }
     }
+    throw Exception('Apple Sign-In is only supported on iOS devices');
   }
 
   //メールアドレスとパスワードでログイン

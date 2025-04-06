@@ -24,7 +24,7 @@ dependencies:
   sign_in_with_apple: ^6.1.4
   google_fonts: ^6.2.1
   firebase_messaging: ^15.2.4
-  firebase_ui_auth: ^1.16.1
+  sign_in_button: ^3.2.0
 
 dev_dependencies:
   flutter_test:
