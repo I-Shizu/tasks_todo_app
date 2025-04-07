@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -29,37 +26,6 @@ class AuthService {
     return userCredential;
   }
 
-  //appleログイン
-  Future<UserCredential> signInWithApple() async {
-    if (Platform.isIOS) {
-      try {
-        final appleCredential = await SignInWithApple.getAppleIDCredential(
-          scopes: [
-            AppleIDAuthorizationScopes.email,
-            AppleIDAuthorizationScopes.fullName,
-          ],
-        );
-        if (appleCredential.identityToken == null) {
-          print('Apple Sign-In failed: Missing credentials');
-        }
-
-        final oauthCredential = OAuthProvider("apple.com").credential(
-          idToken: appleCredential.identityToken,
-          accessToken: appleCredential.authorizationCode,
-        );
-        if (oauthCredential.accessToken == null) {
-          print('Apple Sign-In failed: Missing access token');
-          
-        }
-
-        return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-      } catch (e) {
-        print("Error during Apple Sign-In: $e");
-        rethrow;  // エラーを再スローして上位でキャッチできるようにする
-      }
-    }
-    throw Exception('Apple Sign-In is only supported on iOS devices');
-  }
 
   //メールアドレスとパスワードでログイン
   Future<User?> signInWithEmailAndPassword(String email, String password) async {

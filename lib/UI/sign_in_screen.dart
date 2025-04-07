@@ -1,8 +1,10 @@
 //ログインしたことがない場合の新規登録画面
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sign_in_button/sign_in_button.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:tasks_todo_app/UI/home_page.dart';
 import 'package:tasks_todo_app/auth_sign_in.dart';
 
@@ -48,10 +50,28 @@ class SignInScreen extends ConsumerWidget {
               Buttons.apple,
               text: 'Appleでログイン',
               onPressed: () async {
-                final UserCredential userCredential = await AuthService().signInWithApple();
-                if (userCredential.user != null) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                //appleログインを実行し、成功した場合は画面遷移
+                try {
+                  logIn();
+                } catch (e, stackTrace) {
+                  print('Apple Sign In Error: $e');
+                  print('Stack trace: $stackTrace');
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('エラー'),
+                        content: const Text('Appleでのサインインに失敗しました。'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 }
               },
@@ -75,5 +95,20 @@ class SignInScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void logIn() async {
+    final result = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    final oauthProvider = OAuthProvider('apple.com');
+    final credential = oauthProvider.credential(
+      idToken: result.identityToken,
+      accessToken: result.authorizationCode,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
