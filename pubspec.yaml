@@ -2,7 +2,7 @@ name: tasks_todo_app
 description: "A new Flutter project."
 
 publish_to: 'none'
-version: 1.0.2
+version: 1.0.3
 
 environment:
   sdk: ^3.6.0
