@@ -1,45 +1,64 @@
-# Miscellaneous
+# ----------------------------
+# General
+# ----------------------------
 *.class
 *.log
 *.pyc
 *.swp
 .DS_Store
+.idea/
 .atom/
-.build/
-.buildlog/
 .history
 .svn/
-.swiftpm/
-migrate_working_dir/
+.vscode/        # ※必要ならコメントアウト
+.migrate_working_dir/
 
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# ----------------------------
+# Flutter/Dart
+# ----------------------------
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
+.build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
 /build/
 
-# Symbolication related
-app.*.symbols
+# ----------------------------
+# Firebase (機密情報対策)
+# ----------------------------
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
 
-# Obfuscation related
+# 環境変数ファイル (dotenv等)
+.env
+.env.*
+
+# ----------------------------
+# Symbolication / Obfuscation
+# ----------------------------
+app.*.symbols
 app.*.map.json
 
-# Android Studio will place build artifacts here
+# ----------------------------
+# Android Studio / IntelliJ
+# ----------------------------
+*.iml
+*.ipr
+*.iws
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# ----------------------------
+# macOS
+# ----------------------------
+.DS_Store
+
+# ----------------------------
+# VS Code (任意でコメント解除)
+# ----------------------------
+# .vscode/
